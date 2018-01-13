@@ -24,6 +24,7 @@ class CreateShopsTable extends Migration
             $table->unsignedMediumInteger('province_id')->comment('店铺省份');
             $table->unsignedMediumInteger('city_id')->comment('店铺市区');
             $table->string('address')->comment('店铺地址');
+            $table->string('phone', 11)->comment('店铺联系电话');
             $table->string('business_licence')->comment('营业执照');
             $table->string('food_licence')->comment('食品经营许可证');
             $table->unsignedTinyInteger('status')->comment('店铺状态');
