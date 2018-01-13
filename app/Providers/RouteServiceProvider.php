@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
@@ -16,6 +17,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected $namespace = 'App\Http\Controllers';
 
+    protected $domain = 'm.baicao100.com';
+
     /**
      * Define your route model bindings, pattern filters, etc.
      *
@@ -27,6 +30,10 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('alpha', '[a-z]+');
         Route::pattern('alphanum', '[a-z0-9]+');
 
+        if (App::environment('local')) {
+            $this->domain = 'm.sterna.ttt';
+        }
+
         parent::boot();
     }
 
@@ -37,11 +44,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
+        $this->mapApiH5Routes();
+
         $this->mapApiRoutes();
 
-        $this->mapWebRoutes();
+        $this->mapH5Routes();
 
-        //
+        $this->mapWebRoutes();
     }
 
     /**
@@ -56,6 +65,37 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
+    }
+
+    /**
+     * Define the "h5" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapH5Routes()
+    {
+        Route::domain($this->domain)
+            ->middleware('web')
+            ->namespace($this->namespace . '\H5')
+            ->group(base_path('routes/h5.php'));
+    }
+
+    /**
+     * Define the "h5 api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapApiH5Routes()
+    {
+        Route::domain($this->domain)
+            ->prefix('api')
+            ->middleware('api')
+            ->namespace($this->namespace . '\Api\H5')
+            ->group(base_path('routes/apiH5.php'));
     }
 
     /**
