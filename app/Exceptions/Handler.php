@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Library\Helper;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Route;
 
 class Handler extends ExceptionHandler
 {
@@ -48,6 +50,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        $route = Route::current();
+
+        if (!$route || in_array('api', $route->computedMiddleware)) {
+            return Helper::error($exception);
+        }
+
         return parent::render($request, $exception);
     }
 }
