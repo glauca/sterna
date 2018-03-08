@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected $namespace = 'App\Http\Controllers';
 
-    protected $domain = 'm.baicao100.com';
+    protected $subDomain;
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -30,9 +30,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('alpha', '[a-z]+');
         Route::pattern('alphanum', '[a-z0-9]+');
 
-        if (App::environment('local')) {
-            $this->domain = 'm.sterna.ttt';
-        }
+        $this->subDomain = config('app.sub_domain');
 
         parent::boot();
     }
@@ -68,6 +66,21 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
+     * Define the "api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapApiRoutes()
+    {
+        Route::prefix('api')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
+    }
+
+    /**
      * Define the "h5" routes for the application.
      *
      * These routes all receive session state, CSRF protection, etc.
@@ -76,7 +89,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapH5Routes()
     {
-        Route::domain($this->domain)
+        Route::domain($this->subDomain)
             ->middleware('web')
             ->namespace($this->namespace . '\H5')
             ->group(base_path('routes/h5.php'));
@@ -91,25 +104,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiH5Routes()
     {
-        Route::domain($this->domain)
+        Route::domain($this->subDomain)
             ->prefix('api')
             ->middleware('api')
             ->namespace($this->namespace . '\Api\H5')
             ->group(base_path('routes/apiH5.php'));
-    }
-
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes()
-    {
-        Route::prefix('api')
-            ->middleware('api')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/api.php'));
     }
 }
