@@ -3,6 +3,7 @@
 namespace App\Library;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Helper
@@ -31,14 +32,22 @@ class Helper
      */
     public static function error(\Exception $e)
     {
+        $status  = 500;
+        $message = $e->getMessage();
+
+        if ($e instanceof HttpException) {
+            $status = $e->getStatusCode();
+        }
+
         if ($e instanceof ModelNotFoundException) {
-            return Helper::response(null, 404, '未知资源');
+            $status  = 404;
+            $message = '未知资源';
         }
 
         if ($e instanceof MethodNotAllowedHttpException) {
-            return Helper::response(null, 405, '方法不允许');
+            $message = '方法不允许';
         }
 
-        return Helper::response(null, 500, $e->getMessage());
+        return Helper::response(null, $status, $message);
     }
 }
