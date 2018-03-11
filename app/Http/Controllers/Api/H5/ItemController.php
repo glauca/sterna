@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api\H5;
 
+use App\Http\Controllers\Controller;
 use App\Library\Helper;
-use App\Models\Shop;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
-class ShopController extends Controller
+class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +16,11 @@ class ShopController extends Controller
      */
     public function index(Request $request)
     {
-        $shops = Shop::latest('id')->get(Shop::basicColumn());
+        $items = Item::latest('id')->get(Item::basicColumn());
 
         $data = [
-            'items' => $shops,
-            'total' => Shop::count(),
+            'items' => $items,
+            'total' => Item::count(),
         ];
 
         return Helper::response($data);
@@ -33,8 +34,8 @@ class ShopController extends Controller
      */
     public function show($id)
     {
-        $shop = Shop::findOrFail($id, Shop::basicColumn());
+        $item = Item::findOrFail($id, Item::basicColumn());
 
-        return Helper::response($shop);
+        return Helper::response($item);
     }
 }
