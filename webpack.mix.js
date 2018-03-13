@@ -12,4 +12,14 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+    .js('resources/assets/js/h5/item/show.js', 'public/js/h5/item');
+
+mix.sass('resources/assets/sass/app.scss', 'public/css')
+    .sass('resources/assets/sass/h5/common.scss', 'public/css/h5')
+    .sass('resources/assets/sass/h5/index.scss', 'public/css/h5')
+    .sass('resources/assets/sass/h5/shop/index.scss', 'public/css/h5/shop')
+    .sass('resources/assets/sass/h5/item/show.scss', 'public/css/h5/item');
+
+if (mix.inProduction()) {
+    mix.version();
+}
