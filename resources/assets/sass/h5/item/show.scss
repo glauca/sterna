@@ -1,0 +1,939 @@
+@import "../variables";
+@import "../library/swiper";
+
+.mui-flex, .mui-flex *, .mui-flex:after, .mui-flex:before {
+    box-sizing: border-box;
+}
+
+.mui-flex {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+
+    &>.cell {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        width: 0;
+        -webkit-flex-basis: 0;
+        -ms-flex-preferred-size: 0;
+        flex-basis: 0;
+        max-width: 100%;
+        display: block;
+        padding: 0!important;
+        position: relative;
+    }
+
+    &.align-center {
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+}
+
+// 导航条
+.detail-header-bg {
+    height: 44px;
+    margin-top: -44px;
+}
+
+.header-dom {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    top: 0;
+    line-height: 44px;
+    height: 44px;
+    overflow: visible;
+
+    &.transparent {
+        .main-dom {
+            background: #fff;
+            -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 0.5px 0 rgba(0,0,0,.09);
+            box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 0.5px 0 rgba(0,0,0,.09);
+        }
+
+        .icon-link {
+            background: 0 0;
+            color: #999;
+
+            svg, &:before {
+                color: #999;
+            }
+        }
+
+        .header-nav {
+            opacity: 1;
+        }
+    }
+
+    .main-dom {
+        -webkit-transition: background-color ease .3s;
+        transition: background-color ease .3s;
+        background: -webkit-linear-gradient(rgba(0,0,0,.15),transparent);
+        background: -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,.15)),to(transparent));
+        background: -moz-linear-gradient(rgba(0,0,0,.15) 0,transparent 100%);
+        background: linear-gradient(rgba(0,0,0,.15),transparent);
+        padding-top: var(--safe-area-inset-top);
+    }
+
+    .left-btns, .right-btns {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        -webkit-flex-wrap: wrap;
+    }
+
+    .left-btns {
+        padding: 7px 0 7px 10px;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+
+        a {
+            margin-right: 5px;
+        }
+    }
+
+    .icon-link {
+        position: relative;
+        height: 30px;
+        width: 30px;
+        display: block;
+        -webkit-transition: color ease .2s,background-color ease .2s,fill ease .2s;
+        transition: color ease .2s,background-color ease .2s,fill ease .2s;
+        border-radius: 50%;
+        background-color: rgba(0,0,0,.4);
+
+        svg, &:before {
+            font-size: 20px;
+            color: #fff;
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            margin: 5px;
+            text-align: center;
+            fill: currentColor;
+        }
+
+        span {
+            width: 0;
+            height: 0;
+            display: block;
+            position: absolute;
+            top: -400px;
+        }
+    }
+
+    .header-nav {
+        text-align: center;
+        font-size: 13px;
+        opacity: 0;
+        -webkit-transition: opacity ease .2s;
+        transition: opacity ease .2s;
+        margin: 0 8%;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+
+        li {
+            color: #999;
+            height: 44px;
+            line-height: 44px;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            border-bottom: 2px solid #fff;
+            list-style: none;
+        }
+
+        .active {
+            color: #ff0036;
+            border-color: #ff0036;
+        }
+    }
+
+    &:not(.transparent) .header-nav {
+        pointer-events: none;
+    }
+
+    .right-btns {
+        padding: 7px 10px 7px 0;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+
+        a {
+            margin-left: 5px;
+        }
+    }
+}
+
+#content {
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+    -webkit-transition: padding-top .2s ease;
+    transition: padding-top .2s ease;
+    will-change: padding-top;
+    overflow: hidden;
+    background-color: $body-bg;
+}
+
+.group-warp {
+    margin-bottom: 10px;
+}
+
+// 幻灯片
+.module-preview {
+    position: relative;
+    width: 100%;
+    height: 100vw;
+
+    @include swiper
+}
+
+// 商品名
+.module-title {
+    .share-warp {
+        padding: 10px 10px 0!important;
+        background-color: #FFF;
+    }
+
+    .main {
+        font-size: 14px;
+        color: #051B28;
+        line-height: 20px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        -webkit-box-pack: center;
+        height: 42px;
+        overflow: hidden;
+        word-break: break-all;
+    }
+
+    .share-div {
+        text-align: center;
+        line-height: 1;
+        color: #a5a5a5;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        position: relative;
+
+        &.share-hidden {
+            display: none;
+        }
+
+        .share-bd {
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .share-icon {
+            &:before {
+                @include glyphicon("\e066");
+                font-size: 15px;
+                display: block;
+                color: #a5a5a5;
+            }
+        }
+    }
+}
+
+// 商品价格
+.module-price {
+    background-color: #FFF;
+    padding: 0 10px;
+
+    .real-price {
+        color: #FF0036;
+        height: 36px;
+        line-height: 36px;
+
+        .price-symbol {
+            font-family: arial;
+            font-style: normal;
+            font-size: 18px;
+            position: relative;
+            top: 2px;
+        }
+
+        .price {
+            font-size: 24px;
+            position: relative;
+            top: 2px;
+            margin-right: 5px;
+        }
+
+        .icon-text {
+            background-color: #fb6878;
+            color: #FFF;
+            font-size: 12px;
+            padding: 1px 2px;
+        }
+    }
+
+    .item-price {
+        font-size: 12px;
+        height: 20px;
+        line-height: 20px;
+        color: #888;
+        display: inline-block;
+        margin-right: 10px;
+        font-family: '\5fae\8f6f\96c5\9ed1';
+
+        label {
+            margin-right: 4px;
+        }
+    }
+}
+
+// 商品额外信息
+.module-adds {
+    display: -webkit-box;
+    display: flex;
+    background-color: #FFF;
+    line-height: 30px;
+    padding: 0 10px;
+    font-size: 12px;
+    color: #999;
+    font-weight: lighter;
+
+    span {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        text-align: center;
+
+        &:first-child {
+            text-align: left;
+        }
+        &:last-child {
+            text-align: right;
+        }
+    }
+}
+
+// 产品参数
+.module-props {
+    .props-content {
+        background-color: #FFF;
+        line-height: 40px;
+        padding: 0 10px;
+        color: #051b28;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &:after {
+            color: #B5B5B5;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            margin-top: -10px;
+            line-height: normal;
+            @include glyphicon("\e234");
+            font-size: 18px;
+        }
+    }
+}
+
+// 商品评价
+.module-review {
+    .mui-tagscloud {
+        font-family: 'Heiti SC';
+        padding: 6px;
+        background: #fff;
+
+        .mui-tagscloud-title {
+            font-size: 14px;
+            color: #666;
+            margin: 6px;
+        }
+
+        .mui-tagscloud-comments {
+            margin: 6px;
+        }
+
+        .mui-tagscloud-user {
+            line-height: 16px;
+            font-size: 12px;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .mui-tagscloud-img {
+            width: 24px;
+            height: 24px;
+            border-radius: 20px;
+            -moz-border-radius: 20px;
+        }
+
+        .mui-tagscloud-head-extra {
+            position: absolute;
+            left: 15px;
+            top: -9px;
+            height: 16px;
+        }
+
+        .mui-tagscloud-name {
+            vertical-align: middle;
+            padding: 5px;
+            line-height: 22px;
+            color: #999;
+        }
+
+        .mui-tagscloud-icon {
+            vertical-align: middle;
+            padding: 5px 0;
+            line-height: 22px;
+            height: 12px;
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+
+        .mui-tagscloud-content {
+            font-size: 13px;
+            line-height: 16px;
+            text-align: justify;
+        }
+
+        .mui-tagscloud-date {
+            font-size: 10px;
+            padding-top: 8px;
+            color: #999;
+            line-height: 14px;
+        }
+
+        .mui-tagscloud-more {
+            text-align: center;
+        }
+
+        .mui-tagscloud-more {
+            button {
+                width: 107px;
+                height: 24px;
+                margin: 10px auto;
+                border: 1px solid rgba(255,0,54,.5);
+                color: rgba(255,0,54,.8);
+                background: #fff;
+                border-radius: 12px;
+                line-height: 24px;
+                -webkit-appearance: none;
+                text-align: center;
+            }
+        }
+    }
+}
+
+// 店铺
+.module-shop {
+    padding: 10px;
+    background-color: #FFF;
+
+    .shop-main {
+        display: -webkit-box;
+        display: flex;
+        position: relative;
+
+        .shop-logo {
+            width: 54px;
+            min-width: 54px;
+            height: 54px;
+            border: 1px solid rgba(151,151,151,.5);
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .shop-info {
+            -webkit-flex: 1;
+            flex: 1;
+            padding: 5px 10px;
+            line-height: 18px;
+            display: block;
+
+            .shop-name {
+                color: #333;
+                font-size: 16px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                word-break: break-all;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                -webkit-box-pack: center;
+                display: -webkit-box;
+            }
+
+            .shop-title {
+                font-size: 12px;
+                color: #051b28;
+                margin-top: 5px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+
+                img {
+                    height: 14px;
+                    margin-right: 2px;
+                    vertical-align: bottom;
+                    margin-bottom: 2px;
+                }
+            }
+        }
+    }
+
+    .score {
+        display: -webkit-box;
+        display: flex;
+        text-align: center;
+        color: #999;
+        font-size: 12px;
+        margin: 12px 0 10px;
+
+        li {
+            display: block;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+
+            b {
+                padding-right: 14px;
+                background-position: 100% 50%;
+                background-repeat: no-repeat;
+                background-size: 12px;
+                font-weight: 400;
+
+                &.up:after {
+                    display: inline-block;
+                    color: #e13e4c;
+                    @include glyphicon('\e133');
+                }
+            }
+        }
+    }
+
+    .action {
+        display: -webkit-box;
+        display: flex;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+
+        a {
+            -webkit-flex: 1;
+            flex: 1;
+            border: 1px solid rgba(255,0,54,.5);
+            height: 24px;
+            line-height: 24px;
+            font-size: 13px;
+            color: rgba(255,0,54,.8);
+            border-radius: 12px;
+            text-align: center;
+            display: block;
+            max-width: 96px;
+
+            &:first-child {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+// 商品推荐
+.module-recommend {
+    background-color: #FFF;
+    color: #051b28;
+    font-size: 12px;
+
+    &>.title {
+        display: block;
+        padding: 10px;
+    }
+
+    .scroller-wrap {
+        box-sizing: border-box;
+        width: 100%;
+        overflow: hidden;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        position: relative;
+    }
+
+    .recommend-scroller {
+        display: -webkit-box;
+        -webkit-box-lines: multiple;
+    }
+
+    .panel {
+        width: 100%;
+        display: block;
+        font-size: 0;
+
+        .item {
+            width: 33.333%;
+            margin-bottom: 10px;
+            display: inline-block;
+            font-size: 12px;
+
+            a {
+                display: block;
+                font-size: 12px;
+                position: relative;
+                padding: 0 6.4%;
+
+                .img-wrap {
+                    width: 100%;
+                    padding-top: 100%;
+                    position: relative;
+                    overflow: hidden;
+                    background: #f5f5f5;
+
+                    img {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        max-width: 100%;
+                        max-height: 100%;
+                        -webkit-transform: translate3d(-50%,-50%,0);
+                        -ms-transform: translate3d(-50%,-50%,0);
+                        transform: translate3d(-50%,-50%,0);
+                    }
+                }
+
+                .title {
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    line-height: 16px;
+                    height: 31px;
+                }
+
+                del {
+                    display: block;
+                    font-family: arial;
+                    color: #ccc;
+                    font-size: 12px;
+                    height: 18px;
+                    line-height: 18px;
+                }
+
+                .price {
+                    display: block;
+                    font-family: arial;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+
+// 商品描述
+.module-desc {
+    hr {
+        display: block;
+        unicode-bidi: isolate;
+        -webkit-margin-before: 0.5em;
+        -webkit-margin-after: 0.5em;
+        -webkit-margin-start: auto;
+        -webkit-margin-end: auto;
+        overflow: hidden;
+        border-style: inset;
+        border-width: 1px;
+    }
+
+    img {
+        display: block;
+        margin: 0 auto;
+        vertical-align: top;
+        max-width: 100%;
+    }
+
+    .scrolltips {
+        .part-title {
+            padding: 0 30%;
+            text-align: center;
+            color: #999;
+            margin-bottom: 10px;
+
+            .txt {
+                padding: 0 10px;
+            }
+        }
+    }
+
+    .container {
+        background: #fff;
+        max-width: 100vw;
+    }
+
+    .subtitle {
+        .newAttraction {
+            height: 48px;
+            line-height: 48px;
+            background: #fff;
+            color: #051B28;
+            text-align: center;
+            overflow: hidden;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        &:after {
+            background: #eee;
+            height: 10px;
+            display: block;
+        }
+    }
+
+    #s-desc .module-content:after, .subtitle:after {
+        border-top: 1px solid rgba(0,0,0,.1);
+        content: '\20';
+    }
+
+    .module-container {
+        .module-content {
+            &:after {
+                border-top: 1px solid rgba(0,0,0,.1);
+                background: #eee;
+                height: 10px;
+                content: '\20';
+                display: block;
+            }
+        }
+
+        &:last-child {
+            .module-content:after{
+                display:none;
+            }
+        }
+
+        .module-title {
+            background: #FFF;
+            font-weight: 400;
+            height: 34px;
+            line-height: 34px;
+            position: relative;
+            padding: 6px 0 0 12px;
+            font-size: 14px;
+            color: #666;
+            border-left: 3px solid #FF0036;
+            margin: 0;
+        }
+
+        .mui-shopactivity {
+            overflow: hidden;
+            background-color: #FFF;
+            padding-bottom: 9px;
+
+            .mui-shopactivity-unload {
+                min-height: 100px;
+            }
+
+            .mui-shopactivity-item {
+                a {
+                    position: relative;
+                    display: block;
+                    overflow: hidden;
+
+                    &:before {
+                        content: '\20';
+                        padding-top: 47.5%;
+                        display: block;
+                    }
+                }
+
+                img {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    -webkit-transform: translate3d(-50%,-50%,0);
+                    width: 100%;
+                    max-height: 100%;
+                }
+            }
+        }
+
+        .mui-standardItemProps {
+            overflow: hidden;
+            background-color: #F9F9F9;
+
+            .mui-standardItemProps-standardItemProps {
+                padding: 15px 12px 0 18px;
+            }
+
+            li {
+                margin-bottom: 12px;
+                overflow: hidden;
+                line-height: 1.4em;
+
+                span {
+                    float: left;
+                    overflow: hidden;
+                    font-size: 14px;
+                    color: #051b28;
+
+                    &:first-child {
+                        display: block;
+                        margin-right: 27px;
+                        width: 17.5%;
+                        color: #999;
+                    }
+                }
+            }
+        }
+
+        .mui-custommodule-item {
+            img {
+                width: 100%;
+            }
+        }
+    }
+}
+
+// 页底按钮组
+.actionBar-bg {
+    &:after {
+        content: " ";
+        display: block;
+        height: 50px;
+        padding-top: var(--safe-area-inset-bottom);
+    }
+}
+
+#s-actionBar-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+    left: constant(safe-area-inset-left);
+    right: constant(safe-area-inset-right);
+    transform: translateZ(0);
+
+    .action-bar-wrap {
+        width: 100%;
+        height: 50px;
+        background-color: #FFF;
+        line-height: 50px;
+        display: -webkit-box;
+        display: flex;
+        text-align: center;
+        padding-bottom: var(--safe-area-inset-bottom);
+
+        .cell {
+            display: block;
+            box-sizing: border-box;
+            max-width: 50px;
+            min-width: 26px;
+            flex: 1;
+            height: 50px;
+            border-top: 1px solid #f2f2f2;
+            color: #999;
+            line-height: normal;
+            font-size: 12px;
+            padding-top: 3px;
+
+            &.addfav, &.toshop {
+                max-width: 50px;
+                min-width: 13%;
+
+                svg {
+                    color: #5F646E;
+                }
+            }
+
+             &.support {
+                color: #4A90E2;
+             }
+
+            svg {
+                width: 22px;
+                height: 22px;
+                display: block;
+                margin: 4px auto 0;
+                fill: currentColor;
+            }
+        }
+
+        .trade {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            display: -webkit-box;
+            display: flex;
+            text-align: center;
+            -webkit-transform: translate3d(0,0,0);
+            -ms-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+            min-width: 180px;
+
+            .buy, .cart {
+                font-size: 15px;
+                line-height: 50px;
+            }
+
+            .cart {
+                display: block;
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                flex: 1;
+                color: #fff;
+                background-color: #FF9500;
+            }
+
+            .info {
+                display: block;
+                -webkit-flex-direction: column;
+                flex-direction: column;
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                flex: 1;
+                justify-content: center;
+                align-items: center;
+                word-break: break-all;
+                display: none;
+            }
+
+            .buy {
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                flex: 1;
+                color: #fff;
+                display: block;
+                background-color: #FF0036;
+
+                .disabled-box {
+                    background-color: #FF0036;
+                    display: block;
+                }
+            }
+        }
+    }
+}
